@@ -51,10 +51,16 @@ class LoginVC: UIViewController {
     }
     
     func handleLogin() {
-        var email = "wubba@lubbadubdub.com"
-        var password = "ImMrMeeseeks"
-        /* PART 1A START*/
         
+        /* PART 1A START*/
+        guard let email = emailTextField.text else{
+            self.displayAlert(title: "Bruh u gotta enter an email", message: "Email field is blank")
+            return
+        }
+        guard let password = passwordTextField.text else{
+            self.displayAlert(title: "Smh", message: "U forgot ur password bruh")
+            return
+        }
         /* PART 1A FINISH*/
         Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
             if let error = error {
@@ -72,12 +78,26 @@ class LoginVC: UIViewController {
     }
     
     func handleRegister() {
-        var name = "Rick Morty"
-        var number = "6969696969"
-        var email = "wubba@lubbadubdub.com"
-        var password = "ImMrMeeseeks"
-        /* PART 1B START*/
         
+        /* PART 1B START*/
+        guard let name = nameTextField.text else{
+            self.displayAlert(title: "No name", message: "Please enter your name")
+            return
+        }
+        guard let number = phoneNumberTextField.text else{
+            self.displayAlert(title: "No Phone Number", message: "Please enter your phone number")
+            return
+        }
+        guard let email = emailTextField.text else{
+            self.displayAlert(title: "No Email", message: "Please enter your email")
+            return
+        }
+
+        guard let password = passwordTextField.text else{
+            self.displayAlert(title: "No Password", message: "Please enter your password")
+            return
+        }
+
         /* PART 1B FINISH*/
         Auth.auth().createUser(withEmail: email, password: password, completion: { (user, error) in
             if let error = error {
@@ -129,7 +149,11 @@ class LoginVC: UIViewController {
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         /* PART 1C START*/
-        
+        if segue.identifier == "toMainFeed" {
+            if let nextViewController = segue.destination as? FeedVC {
+                    nextViewController.userID = ourUserID
+            }
+        }
         /* PART 1C FINISH*/
     }
 }

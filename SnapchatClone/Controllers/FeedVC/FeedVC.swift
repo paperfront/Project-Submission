@@ -9,11 +9,11 @@
 import UIKit
 import FirebaseAuth
 
-class FeedVC: UIViewController {
+class FeedVC: UIViewController, UITableViewDataSource{
     var countLabel: UILabel!
     var userID: String!
     
-    var tableView: UITableView!
+    @IBOutlet weak var TableView: UITableView!
     var arrayOfSnaps: [SnapImage]!
     
     var selectedImage: SnapImage!
@@ -30,6 +30,9 @@ class FeedVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         navigationItem.title = "My Snaps"
     }
+    
+    
+    
     
     func setupArrayOfSnaps() {
         arrayOfSnaps = []
@@ -53,9 +56,13 @@ class FeedVC: UIViewController {
     
     func setupTableView() {
         /* PART 2A START */
-    
+        TableView.delegate = self
+        TableView.dataSource = arrayOfSnaps as? UITableViewDataSource
+        
         /* PART 2A FINISH */
     }
+    
+    
     
     @objc func logOut() {
         do {
